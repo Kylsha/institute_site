@@ -1,0 +1,474 @@
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>Наш сайт</title>
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> -->
+
+  <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" /> -->
+  <!-- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script> -->
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css"> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script> -->
+  <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script> -->
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script> -->
+  <!-- <script type="text/javascript" src="https://raw.githubusercontent.com/w8r/leaflet-area-select/master/src/Map.SelectArea.js"></script> -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script> -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css" /> -->
+  <!-- <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="shortcut icon" href="http://www.iconj.com/ico/f/x/fxlgnbqmnc.ico" type="image/x-icon" />
+
+  <style>
+    #myModal{
+        font-family:monospace;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        
+        /* transform: translate(-50%, -50%); */
+    }
+    .modal-dialog{
+        width: 60%;
+        /* height: 500px; */
+
+    }
+    .modal-content{
+        width: auto;
+        height: auto;
+        top:5%;
+        
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto; 
+        /* overflow-y: auto; */
+    }
+    .modal-header{
+        font-weight: bold;
+        height: auto;
+        /* border: 1px solid cyan; */
+        font-size: 30px;
+        margin: 5px;
+        overflow: hidden;
+    }
+    .modal-body{
+        height: auto;
+        margin: 5px;
+        /* border: 1px solid cyan; */
+        font-size: 25px;
+        overflow: hidden;
+        
+    }
+    .imgModal{
+        /* border: 1px solid cyan; */
+        /* max-width:40%; */
+        /* min-width: 40%; */
+        /* width: 100%; */
+        margin: 5px;
+        box-shadow: 0px 2px 3px rgba(0,0,0,.13) ,1px 2px 2px rgba(0,0,0,.1) , -1px -2px 2px rgba(0,0,0,.05) ;
+        
+        /* margin-right: 5px; */
+        /* height: 100%; */
+    }
+    .imgInModal{
+        /* border: 2px solid black; */
+        height: auto;
+        object-fit: cover;
+        width:100%;
+        /* margin: 5px; */
+        /*width:300px;*/
+        /*height: 200px;*/
+        overflow: hidden;
+    }
+    .txct{
+        display: flex;
+        height: auto;
+        font-size: 20px;
+        /* border: 1px solid cyan; */
+        margin: 5px;
+        white-space: pre-line;
+    }
+    .txct span{
+        /* border: 1px solid cyan; */
+        /* margin: 5px; */
+        margin: 5px;
+        overflow-y: auto;
+        white-space: pre-line;
+    }
+    .headerMain{ 
+      background-color: #e73332;
+      height: 10%; 
+      width: 100%; 
+
+      /*text-align: center;*/
+      font-family: monospace;
+      color: #1780ba;
+      /*vertical-align: middle; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .headerMain>p {
+        
+      font-size: 50px;
+    }
+    .headerDown{ 
+      background-color:  #1780ba;
+      height: 10%; 
+      width: 100%; 
+
+      font-family: monospace;
+      color: #e73332;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .headerDown>p {
+      font-size: 50px;
+    }
+    #newsWrapper{
+        /* border: 1px solid black; */
+        text-align: left;
+        overflow-y:scroll;
+    }
+    #newsBlock p{
+        /* border: 1px solid black; */
+        text-align: left;
+        /* margin: 5px; */
+    }
+    .news{ 
+        display: flex;
+        flex-direction: column;
+        align-self:center;
+        height: 80%; 
+        width: 100%; 
+        font-family: monospace;
+        /*background-color: #0add00;*/
+        font-size: 50px;
+        margin: 0 auto;
+        overflow:hidden; 
+        overflow-y:scroll;
+        display: flex;
+        /* justify-content: center; */
+        align-items: center;
+        /*padding:5px;*/
+    }
+    .news::-webkit-scrollbar {
+        /* This is the magic bit for WebKit */
+        display: none;
+    }
+    .newItem{
+        /* border: 1px solid black; */
+        
+
+        width:40%;
+        margin: 15px;
+        font-size: 20px;
+        /*max-height: 250px;*/
+        flex-wrap: wrap;
+        box-shadow: 0px 2px 3px rgba(0,0,0,.13) ,1px 2px 2px rgba(0,0,0,.1) , -1px -2px 2px rgba(0,0,0,.05) ;
+        cursor: pointer;
+        /* overflow: hidden; */
+        /* min-height: 200px; */
+        /* max-height: 200px; */
+        /* overflow: hidden; */
+    }
+    .newItem:hover .content{
+        display: block;
+    } 
+    .itemHeader{
+        /* border: 1px solid cyan; */
+        /*font-size: 25px;*/
+        font-weight: bold;
+        	
+        text-shadow: 1px 4px 3px rgba(0,0,0,0.3);
+        /* overflow: hidden; */
+        /* padding:5px; */
+        max-height: auto;
+        overflow: hidden;
+        margin: 5px;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        cursor: pointer;
+        /* text-shadow: 1px 1px 2px black ; */
+    }
+    .itemHeaderContent{
+        margin: 5px;
+        font-size: 25px;
+        /* border: 1px solid blue; */
+        overflow: hidden;
+    }
+    .content_wrapper{
+        /*height: 90%;*/
+        /* border: 1px solid blue; */
+        display: flex;
+        /*flex-wrap: wrap;*/
+        padding:5px;
+        height: 250px;
+        margin: 5px;
+        flex:1;
+        /*overflow:hidden;*/
+        /*padding:5px;*/
+        /*flex-direction: column;*/
+    }
+    .text_info{
+        /* border: 1px solid red; */
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        margin-left: 5px;
+        overflow: hidden;
+
+        /*height: 200px;*/
+        /*text-overflow: ellipsis;*/
+        /*overflow: hidden;*/
+    }
+    .imgNew{
+        /*flex: 0 0 100%;*/
+        display: flex;
+        flex-direction: row;
+        /*max-width:25%;*/
+        /*width:300px;*/
+        /*height: 200px;*/
+        max-width:40%;
+        min-width: 40%;
+        height: 100%;
+        box-shadow: 0px 2px 3px rgba(0,0,0,.13) ,1px 2px 2px rgba(0,0,0,.1) , -1px -2px 2px rgba(0,0,0,.05) ;
+
+    }
+    .imgNew img{
+        object-fit: cover;
+        width:100%;
+        /*width:300px;*/
+        /*height: 200px;*/
+        overflow: hidden;
+    }
+    .titleShort{
+        /* border: 1px solid green; */
+        height: auto;
+        /* min-height: 20%; */
+        /* max-height: 50%; */
+        overflow: visible;
+        /* text-overflow: ellipsis; */
+        /* white-space: nowrap; */
+        margin: 5px;
+    }
+    .titleShort:hover{
+      /*border: 1px solid red;*/
+      /*min-height: 20%;*/
+      height: auto;
+       overflow: visible;
+      white-space: normal;
+    }
+    .content{
+        /*border: 1px solid green;*/
+        /* max-height: 50%; */
+        height: auto;
+        /* border: 1px solid grey; */
+        /* overflow: hidden; */
+        /* text-overflow: ellipsis; */
+        margin: 5px;
+        margin-top: 0px;
+        font-size: 15px;
+        font-style: italic;
+        display: none;
+        /* display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical; */
+    }
+    .contentIn{
+        font-size: 10px;
+        /* word-wrap: break-word;   */
+        min-width: 0;
+        /* text-overflow: ellipsis; */
+        /* overflow: hidden; */
+    }
+  </style>
+</head>
+<body>
+    <div class= "container" style="height: 100%; width: 100%;  margin:0px; padding: 0px;">
+        <div class="headerMain"><p>НОВОСТИ</p></div>
+        <div id="newsWrapper">
+            <div id="newsBlock" class="news"><p>Читайте наши новости:</p></div>
+        </div>
+        <div class="headerDown"><p>ИНСТИТУТА</p></div>
+    </div>
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <div class="modal-title">Modal Header</div>
+            </div>
+            <div class="modal-body"><p>Some text in the modal.</p></div>
+            <div class="imgModal"><img class = "imgInModal" src="" ></div>
+            <div class="txct"><span>EEEEEEEEEEEE</span>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+       
+    
+
+    
+</body>
+<script>
+    var list_news = [
+        {
+            "header": "Домой работать не уйдете",
+            "content_short": "Надо - значит, надо",
+            "content":"Хотите на удаленку?\nДа вам просто нравится вставать позже обычного и, никуда не спеша, приступать к выполнению заданий :)\nЗнаем мы вас...",
+            "url_image": "https://i.ytimg.com/vi/-Mr_yVAqYs0/maxresdefault.jpg"
+        }, 
+        {
+            "header": "Конкурс",
+            "content_short": "\"Я обязятельно выживу\"",
+            "content":"Для проведения конкурса чтецов на публичных слушаниях (в том числе и электронных) требуются кандидаты с харизмой и стойким характером. Победитель будет отобран особым путем и награжден устной похвалой.\nТакже гарантирована интересная работа в дальнейшем.",
+            "url_image": "https://o.aolcdn.com/images/dims?thumbnail=960%2C&quality=95&image_uri=https%3A%2F%2Fs.yimg.com%2Fos%2Fcreatr-uploaded-images%2F2020-05%2Fe8ac86b0-9acf-11ea-9eb7-02c1d2264fac&client=amp-blogside-v2&signature=db48463b6b940ee54c21f38180e0b66fbf0f9a2e"
+        }, 
+        {
+            "header": "Вечер в хату",
+            "content_short": "Приветствуем нового сотрудника",
+            "content":"Скоро у нас будет работать новый сотрудник, который обещает разряжать атмосферу в коллективе.\nПока его имя, пол и возраст неизвестны, но пусть для сотрудников это будет сюрпризом.\nНовый сотрудник будет работать в каждом из рабочих коллективов до тех пор, пока среди остальных сотрудников не будет налажен быт и взаимопонимание.",
+            "url_image": "https://hr-portal.ru/files/styles/500px/public/mini/emocionalnaya_podderzhka.jpg?itok=hSOgvg-R"
+        }, 
+        {
+            "header": "Обе кабины заперты",
+            "content_short": "Пора уже иметь совесть",
+            "content":"В здании института опять невозможно пройти в туалетное помещение.\nУбедительная просьба согласовывать свои походы с коллегами, иначе нас ждет еще одна череда прорывов.",
+            "url_image": "https://www.manufacturedhomepronews.com/wordsofwisdom/wp-content/uploads/2019/05/natures-image-manufacturedhomepronews-46-e1557445617452.jpg"
+        }, 
+        {
+            "header": "Вам заплатят",
+            "content_short": "Шутка про премию уже неактуальна",
+            "content":"В ближайшее время будет выдача запрлаты. Просим держать руку на пульсе и следить за обновлением СМС-оповещений",
+            "url_image": "https://millionstatusov.ru/pic/statpic/all9/5ef20bf90d09c.jpeg"
+        }, 
+        {
+            "header": "Случился прорыв",
+            "content_short": "Этого никто не ожидал",
+            "content":"И предыдущая новость тут не при чем. На восьмом этаже института произошел прорыв. К сожалению, пока не имеется оперативных данных по виновному лицу(лицам), однако, следствие ведется по факту произошедшего.\r\nПо причине выброса нечистот на напольное покрытие часть этажа была перекрыта для доступа, а сотрудники были сосланы домой.",
+            "url_image": "https://i.ytimg.com/vi/JyQzojW5Y-s/maxresdefault.jpg"
+        }, 
+        {
+            "header": "В пилзнере появились блинцы",
+            "content_short": "Обязательно стоит попробовать",
+            "content":"В меню одного чешского ресторана, что недалеко от рабочего здания, были добавлены вкусные блинцы с яблочной начинкой.\nРекомендуется к ознакомлению, в том числе и в пищеварительном характере.",
+            "url_image": "https://img.cdn.fontanka.ru/mm/items/2015/3/19/0019/blin3.jpg?"
+        }, 
+    ]
+    
+    var bre = document.createElement("br")
+    var menuD = document.getElementById("newsBlock");
+    for (var item in list_news) {
+        itemData = list_news[item]
+        var header = itemData['header']
+        var content_short = itemData['content_short']
+        var content = itemData['content']
+        var url_image = itemData['url_image']
+
+        console.log(list_news[item])
+
+        // whole eelement
+        var newItem = document.createElement("span");
+        newItem.className = 'newItem'
+
+        // just a header
+        var newItemHeader = document.createElement("label");
+        newItemHeader.className = "itemHeader"
+        newItemHeader.id = "nameHeader"
+        // newItemHeader.innerHTML = header
+
+        // header content 
+
+        var header_content =  document.createElement("p");
+        header_content.className = "itemHeaderContent"
+        header_content.innerHTML = header
+
+        // wrapper
+        var wrapperTE = document.createElement("div");
+        wrapperTE.className = "content_wrapper"
+
+        // picture
+        var pic = document.createElement("div")
+        
+        // pic.setAttribute("data-toggle", "modal")
+        // pic.setAttribute("data-target","#myModal")
+
+        var elemPic = document.createElement("img")
+        elemPic.src = url_image
+        // elemPic.className = "imgNew"
+        pic.appendChild(elemPic)
+        pic.className = "imgNew"
+
+        // text info wrapper
+        var text_info = document.createElement("div")
+        // text_info.innerHTML = content_short
+        text_info.className = 'text_info'
+
+        // short title
+        var title_short = document.createElement("div")
+        title_short.innerHTML = content_short
+        title_short.className = 'titleShort'
+
+        // all content
+        var content_all =  document.createElement("div")
+        content_all.setAttribute("txt_data", content)
+        content_all.innerHTML = "Нажмите на новость для прочтения..."
+        content_all.className = 'content'
+
+        // content_all.appendChild(innerContent)
+
+        // title_short.appendChild(title_short_content)
+
+        newItemHeader.appendChild(header_content)
+
+        text_info.appendChild(title_short)
+        text_info.appendChild(content_all)
+
+        wrapperTE.appendChild(pic)
+        wrapperTE.appendChild(text_info)
+        
+        newItem.appendChild(newItemHeader)
+        newItem.appendChild(wrapperTE)
+        newItem.onclick = ikylsha
+
+        newsBlock.appendChild(newItem);  
+
+    }
+
+    function ikylsha(text){
+        var attrs= this.children
+        var itemName = attrs[0].innerText
+        var content = attrs[1]
+
+        var picsource = content.children[0].children[0].src
+        var itemShorttext = content.children[1].children[0].innerText
+        var itemAlltext = content.children[1].children[1].attributes.txt_data.value
+        console.log(attrs)
+        // console.log(itemAlltext)
+
+        $("#myModal").find('.modal-title').text(itemName)
+        $("#myModal").find('.modal-body').text(itemShorttext)
+        $("#myModal").find('.txct').text(itemAlltext)
+        $("#myModal").find('.imgInModal').attr('src', picsource)
+
+        $("#myModal").modal()
+    }
+
+
+</script>
+</html>
