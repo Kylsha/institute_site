@@ -24,8 +24,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="shortcut icon" href="http://www.iconj.com/ico/f/x/fxlgnbqmnc.ico" type="image/x-icon" />
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 
   <style>
+      
     #myModal{
         font-family:monospace;
         position: absolute;
@@ -37,17 +40,48 @@
     .modal-dialog{
         width: 60%;
         /* height: 500px; */
-
     }
     .modal-content{
         width: auto;
         height: auto;
-        top:5%;
+        /* top:5%; */
         
         justify-content: center;
         align-items: center;
         margin: 0 auto; 
         /* overflow-y: auto; */
+    }
+    #mds{
+        top: 10%;
+    }
+    #confirmation-content{
+        /* position: absolute; */
+        font-family: monospace;
+        border: 0px;
+        width: 50%;
+        height: auto;
+        /* top:55%; */
+        /* margin: 15px; */
+
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto; 
+        /* overflow-y: auto; */
+    }
+    #mds_head{
+        border: none;
+    }
+    #mds_foot{
+        border: none;
+    }
+    .img_button{
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+        /* display: none; */
+    }
+    img[src=""] {
+        display: none;
     }
     .modal-header{
         font-weight: bold;
@@ -160,6 +194,28 @@
         align-items: center;
         /*padding:5px;*/
     }
+    .btn_add{
+        font-family: monospace;
+        font-weight: bold;
+        /* font-size: 25px; */
+        font-size: 1vw;
+        width:10%;
+        height: 5%;
+        border-radius: 15px 15px 0px 0px;
+        border:none;
+        background: #1780ba;
+        position: absolute;
+        bottom: 10%;
+        right: 5%;
+        outline:none;
+        /* box-shadow: 0px 2px 3px rgba(0,0,0,.13) ,1px 2px 2px rgba(0,0,0,.1) , -1px -2px 2px rgba(0,0,0,.05) ; */
+        text-shadow: 1px 4px 3px rgba(0,0,0,0.3);
+        cursor: pointer;
+        overflow: hidden;
+    }
+    .btn_add:active{
+        transform: translateY(5px);
+    }
     .news::-webkit-scrollbar {
         /* This is the magic bit for WebKit */
         display: none;
@@ -168,7 +224,7 @@
         /* border: 1px solid black; */
         
 
-        width:40%;
+        width:50%;
         margin: 15px;
         font-size: 20px;
         /*max-height: 250px;*/
@@ -291,19 +347,146 @@
         /* text-overflow: ellipsis; */
         /* overflow: hidden; */
     }
+    #mdAdd{
+        font-family: monospace;
+        
+    }
+    .newsAdder{
+        border-radius: 10px;
+        margin:10px;
+        max-width:100%;
+        border:none
+    }
+    .newsAdder textarea{
+        /* margin:10px; */
+        box-shadow: inset 0px 0px 3px rgba(0,0,0,0.5); ;
+        outline: none;
+    }
+    .newsAdderAll, textarea{
+        /* border: 3px solid red; */
+        white-space: nowrap;
+        resize: none;
+        padding: 10px;
+        max-width:100%;
+        border-radius: 5px;
+        width:100%;
+        box-shadow: inset 0px 0px 3px rgba(0,0,0,0.5); 
+        border: none;
+    }
+    .cool{
+        border-radius: 5px;
+        margin:10px;
+        width: 100px;
+        height: 100px;
+        background-color:#e6ffed;
+        box-shadow:inset 0px 0px 3px rgba(0,0,0,0.5); 
+        position: relative;
+        /* display: inline-block; */
+    }
+    .cool span{
+        /* position: absolute;     */
+        text-align: center;
+        /* left: 0; */
+        /* top: 0; */
+        /* height: 100%; */
+        /* width: 100%; */
+        /* display: inline-block; */
+    }
+    .cool img{
+        border-radius: 10%;
+        padding: 5px;
+        left: 0;
+        top: 0;
+        position: absolute;    
+        text-align: center;
+        /* height: 100%; */
+        /* width: 100%; */
+        /* display: inline-block; */
+    }
+
+    .newsAdderText{
+        box-shadow:inset 0px 0px 3px rgba(0,0,0,0.5); ;
+        border-radius: 5px;
+        margin: 10px;
+        padding: 10px;
+        max-width:100%;
+        min-height: 50px;
+        /* border:none; */
+        outline:none;
+        
+    }
+    [contenteditable] { background:white }
+    [data-placeholder]:empty:before{
+        content: attr(data-placeholder);
+    }
+    #loading_reel{
+        color:black;
+        position:absolute;
+        width: 10%;
+        height: 10%;
+        vertical-align: middle;
+
+    }
+    .spinner {
+        border: 1px solid;
+        position: fixed;
+        width: 5%;
+        height: 5%;
+        display: none;
+        border:none;
+        z-index:4 !important;
+        filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(36deg) brightness(104%) contrast(97%);
+        
+        /* margin: auto; */
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 50 50'%3E%3Cpath d='M28.43 6.378C18.27 4.586 8.58 11.37 6.788 21.533c-1.791 10.161 4.994 19.851 15.155 21.643l.707-4.006C14.7 37.768 9.392 30.189 10.794 22.24c1.401-7.95 8.981-13.258 16.93-11.856l.707-4.006z'%3E%3CanimateTransform attributeType='xml' attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='0.6s' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E") center / 50px no-repeat;
+    }
+    .loading_wheel{
+        /* border: 1px solid black; */
+        width: 50px;
+        height: 50px;
+        margin: auto;
+    }
+    .labelReady{
+        text-align: center;
+        margin:auto;
+        max-width:100%;
+        border:none
+    }
+
+
+    /* .newsAdderText textarea{
+        outline: none;
+        resize: both;
+    } */
   </style>
 </head>
 <body>
+    <!-- <label class="file-upload-container" for="file-upload">
+        <input id="file-upload" type="file" style="display:none;">
+        Select an Image
+    </label> -->
+    
     <div class= "container" style="height: 100%; width: 100%;  margin:0px; padding: 0px;">
+        
         <div class="headerMain"><p>НОВОСТИ</p></div>
         <div id="newsWrapper">
             <div id="newsBlock" class="news"><p>Читайте наши новости:</p></div>
+            
+            <input id="file-input" type="file" name="name" style="display: none;" accept="image/gif, image/jpeg, image/png, image/jpeg"/>
+            <button id="file-upload" type="button" class="btn_add" type="file" onclick = "ikylshaAdd()">Добавить новость</button>
         </div>
+        
         <div class="headerDown"><p>ИНСТИТУТА</p></div>
+        
     </div>
+    
 
     <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog" >
           <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
@@ -314,143 +497,360 @@
             <div class="imgModal"><img class = "imgInModal" src="" ></div>
             <div class="txct"><span>EEEEEEEEEEEE</span>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
             </div>
           </div>
         </div>
         </div>
     </div>
+
+    <div class="modal fade" id="addNew" role="dialog">
+        <div class="modal-dialog" id="mdAdd">
+          <!-- Modal content-->
+          <div class="modal-content" style="background:#f5fffc">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <div class="modal-title">Добавление новости</div>
+            </div>
+            <div class="newsAdder">
+                <textarea id="headerTitle" maxlength="150" placeholder="Заголовок новости"></textarea>
+            </div>
+            <div class="newsAdder">
+                <textarea id="shortDescription" maxlength="150" placeholder="Краткое описание"></textarea>
+            </div>
+
+            <button id="coolpic" type="button" class="btn btn-default cool" >
+                <span>Картинка</span>
+                <img class="img_button" src=""/>
+            </button>
+            
+            <div id="allNewText" class="newsAdderText" contenteditable data-placeholder="Текст новости"></div>
+                <!-- <textarea placeholder="Текст новости"></textarea> -->
+            
+            <!-- <input class="newsAdderAll" id="allDescription" placeholder="Текст новости" ><textarea placeholder="Текст новости"></textarea><br><br> -->
+            <!-- <div class="imgModal"><img class = "imgInModal" src="" ></div> -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="confirmAdd()">Добавить</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            
+          </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="confirmation">
+        <div class="modal-dialog modal-sm" id = "mds">
+          <div class="modal-content" id = "confirmation-content">
+            <div class="modal-header" id="mds_head">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Сохранить изменения?</h4>
+            </div>
+            <div class="modal-footer"id="mds_foot">
+                <div class='labelReady'>Новость загружена!</div>
+                <div class="loading_wheel" id = "spinTire"><img class="loading_wheel"  src="https://www.drupal.org/files/issues/throbber_12.gif"/></div>
+                <button type="button" class="btn btn-default" id="modal-btn-yes" onclick="addNewToBin()">Да</button>
+                <button type="button" class="btn btn-primary" id="modal-btn-no" data-dismiss="modal">Нет</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="no_data">
+        <div class="modal-dialog modal-sm" id = "mds">
+          <div class="modal-content" id = "confirmation-content">
+
+            <div class="modal-header" id="mds_head">
+                
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Заполните все данные</h4>
+            </div>
+            <div class="modal-footer"id="mds_foot">
+                <button type="button" class="btn btn-default" id="modal-btn-si" data-dismiss="modal">ОК</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- <div class="spinner-border" role="status" id="loading_reel">
+        <span class="sr-only">Loading...</span>
+    </div> -->
        
     
 
     
 </body>
 <script>
-    var list_news = [
-        {
-            "header": "Домой работать не уйдете",
-            "content_short": "Надо - значит, надо",
-            "content":"Хотите на удаленку?\nДа вам просто нравится вставать позже обычного и, никуда не спеша, приступать к выполнению заданий :)\nЗнаем мы вас...",
-            "url_image": "https://i.ytimg.com/vi/-Mr_yVAqYs0/maxresdefault.jpg"
-        }, 
-        {
-            "header": "Конкурс",
-            "content_short": "\"Я обязятельно выживу\"",
-            "content":"Для проведения конкурса чтецов на публичных слушаниях (в том числе и электронных) требуются кандидаты с харизмой и стойким характером. Победитель будет отобран особым путем и награжден устной похвалой.\nТакже гарантирована интересная работа в дальнейшем.",
-            "url_image": "https://o.aolcdn.com/images/dims?thumbnail=960%2C&quality=95&image_uri=https%3A%2F%2Fs.yimg.com%2Fos%2Fcreatr-uploaded-images%2F2020-05%2Fe8ac86b0-9acf-11ea-9eb7-02c1d2264fac&client=amp-blogside-v2&signature=db48463b6b940ee54c21f38180e0b66fbf0f9a2e"
-        }, 
-        {
-            "header": "Вечер в хату",
-            "content_short": "Приветствуем нового сотрудника",
-            "content":"Скоро у нас будет работать новый сотрудник, который обещает разряжать атмосферу в коллективе.\nПока его имя, пол и возраст неизвестны, но пусть для сотрудников это будет сюрпризом.\nНовый сотрудник будет работать в каждом из рабочих коллективов до тех пор, пока среди остальных сотрудников не будет налажен быт и взаимопонимание.",
-            "url_image": "https://hr-portal.ru/files/styles/500px/public/mini/emocionalnaya_podderzhka.jpg?itok=hSOgvg-R"
-        }, 
-        {
-            "header": "Обе кабины заперты",
-            "content_short": "Пора уже иметь совесть",
-            "content":"В здании института опять невозможно пройти в туалетное помещение.\nУбедительная просьба согласовывать свои походы с коллегами, иначе нас ждет еще одна череда прорывов.",
-            "url_image": "https://www.manufacturedhomepronews.com/wordsofwisdom/wp-content/uploads/2019/05/natures-image-manufacturedhomepronews-46-e1557445617452.jpg"
-        }, 
-        {
-            "header": "Вам заплатят",
-            "content_short": "Шутка про премию уже неактуальна",
-            "content":"В ближайшее время будет выдача запрлаты. Просим держать руку на пульсе и следить за обновлением СМС-оповещений",
-            "url_image": "https://millionstatusov.ru/pic/statpic/all9/5ef20bf90d09c.jpeg"
-        }, 
-        {
-            "header": "Случился прорыв",
-            "content_short": "Этого никто не ожидал",
-            "content":"И предыдущая новость тут не при чем. На восьмом этаже института произошел прорыв. К сожалению, пока не имеется оперативных данных по виновному лицу(лицам), однако, следствие ведется по факту произошедшего.\r\nПо причине выброса нечистот на напольное покрытие часть этажа была перекрыта для доступа, а сотрудники были сосланы домой.",
-            "url_image": "https://i.ytimg.com/vi/JyQzojW5Y-s/maxresdefault.jpg"
-        }, 
-        {
-            "header": "В пилзнере появились блинцы",
-            "content_short": "Обязательно стоит попробовать",
-            "content":"В меню одного чешского ресторана, что недалеко от рабочего здания, были добавлены вкусные блинцы с яблочной начинкой.\nРекомендуется к ознакомлению, в том числе и в пищеварительном характере.",
-            "url_image": "https://img.cdn.fontanka.ru/mm/items/2015/3/19/0019/blin3.jpg?"
-        }, 
-    ]
+    let hdrTitle = ""
+    let shortTitle = ""
+    let allText = ""
+    let img_source = ""
+    let listConf = []
+    let formdata = new FormData()
+
+    var cloudinary_url = 'https://api.cloudinary.com/v1_1/kylsha/upload'
+    var upload_preset = 'kylsha_uploader'
+    var fu = document.getElementById('file-input')
+
+    $("#spinTire").hide();
+    $(".labelReady").hide();
     
-    var bre = document.createElement("br")
-    var menuD = document.getElementById("newsBlock");
-    for (var item in list_news) {
-        itemData = list_news[item]
-        var header = itemData['header']
-        var content_short = itemData['content_short']
-        var content = itemData['content']
-        var url_image = itemData['url_image']
 
-        console.log(list_news[item])
+    function screen(){
+        var h = window.innerHeight
+        var w = window.innerWidth
+        var scale_factor = ((w*100)/h)|0
+        if (scale_factor<80){
+            $(".newItem").css('width', '90%')
+            $("#file-upload").css('width', '30%')
+            $("#file-upload").css('font-size', '2vw')
+            $(".modal-dialog").css('width', '90%')
+        }
+        else{
+            $(".newItem").css('width', '50%')
+            $("#file-upload").css('width', '10%')
+            $("#file-upload").css('font-size', '1vw')
+            $(".modal-dialog").css('width', '60%')
+        }
+    }
+    window.addEventListener("orientationchange", function() {
+        screen()
+    }, false);
+    window.addEventListener("resize", function() {
+        screen()
+    }, false);
+    
+    function addNewToBin(){
+        $("#spinTire").hide();
+        $(".labelReady").hide();
+        // console.log(listConf)
+        $("#spinTire").show();
+        $("#modal-btn-yes").hide()
+        $("#modal-btn-no").hide()
 
-        // whole eelement
-        var newItem = document.createElement("span");
-        newItem.className = 'newItem'
+        axios({
+            url: cloudinary_url,
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/x-www-form-urlencoded'
+            },
+            data: formdata
+        }).then(function(res){
+            console.log(res.data.secure_url)
+            $("#spinTire").hide();
+            $(".labelReady").show()
+            
+            setTimeout(function(){
+                // $('#confirmation').removeData();
+                var modalHtml = $("#confirmation").html();
+                $("#confirmation").html("");
+                $("#confirmation").html(modalHtml);
+                // $('#confirmation').modal('toggle'); 
+                $('#confirmation').modal('hide');// or fade, css display however you'd like.
+                $(".labelReady").hide()
 
-        // just a header
-        var newItemHeader = document.createElement("label");
-        newItemHeader.className = "itemHeader"
-        newItemHeader.id = "nameHeader"
-        // newItemHeader.innerHTML = header
-
-        // header content 
-
-        var header_content =  document.createElement("p");
-        header_content.className = "itemHeaderContent"
-        header_content.innerHTML = header
-
-        // wrapper
-        var wrapperTE = document.createElement("div");
-        wrapperTE.className = "content_wrapper"
-
-        // picture
-        var pic = document.createElement("div")
+                // var mainModal = $("#addNew").html();
+                // $("#addNew").html("");
+                // $("#addNew").html(mainModal);
+                $('#addNew').modal('hide')
+                data_ot = {
+                    "header": $('#headerTitle').val(),
+                    "content_short": $('#shortDescription').val(),
+                    "content": $('#allNewText').text(),
+                    "url_image": res.data.secure_url
+                }
+                data_json.unshift(data_ot)
+                console.log(JSON.stringify(data_json))
+                
+                let reqUpd = new XMLHttpRequest();
+                reqUpd.onreadystatechange = () => {
+                if (reqUpd.readyState == XMLHttpRequest.DONE) {
+                    console.log(reqUpd.responseText);
+                }
+                };
+                reqUpd.open("PUT", "https://api.jsonbin.io/b/5f8569427243cd7e824ea3e0", true);
+                reqUpd.setRequestHeader("Content-Type", "application/json");
+                reqUpd.send(JSON.stringify(data_json));
+                
+            }, 2000);
+            
+        }).catch(function(err) {
+            console.log(err)
+        })
         
-        // pic.setAttribute("data-toggle", "modal")
-        // pic.setAttribute("data-target","#myModal")
-
-        var elemPic = document.createElement("img")
-        elemPic.src = url_image
-        // elemPic.className = "imgNew"
-        pic.appendChild(elemPic)
-        pic.className = "imgNew"
-
-        // text info wrapper
-        var text_info = document.createElement("div")
-        // text_info.innerHTML = content_short
-        text_info.className = 'text_info'
-
-        // short title
-        var title_short = document.createElement("div")
-        title_short.innerHTML = content_short
-        title_short.className = 'titleShort'
-
-        // all content
-        var content_all =  document.createElement("div")
-        content_all.setAttribute("txt_data", content)
-        content_all.innerHTML = "Нажмите на новость для прочтения..."
-        content_all.className = 'content'
-
-        // content_all.appendChild(innerContent)
-
-        // title_short.appendChild(title_short_content)
-
-        newItemHeader.appendChild(header_content)
-
-        text_info.appendChild(title_short)
-        text_info.appendChild(content_all)
-
-        wrapperTE.appendChild(pic)
-        wrapperTE.appendChild(text_info)
         
-        newItem.appendChild(newItemHeader)
-        newItem.appendChild(wrapperTE)
-        newItem.onclick = ikylsha
+    }
 
-        newsBlock.appendChild(newItem);  
+    function confirmAdd() {
+        // $("#mi-modal")
+        // $('#myModal').css({backdrop: 'static', keyboard: false}) 
+        hdrTitle = $('#headerTitle').val()
+        shortTitle = $('#shortDescription').val()
+        allText = $('#allNewText').text()
+        img_source = $('.img_button').attr('src')
+        listConf = [hdrTitle, shortTitle, allText, img_source]
 
+        if(listConf.every(v => v != "")){
+            $("#modal-btn-yes").show()
+            $("#modal-btn-no").show()
+            $("#confirmation").modal({backdrop: 'static', keyboard: false})
+        }
+        else{
+            $("#no_data").modal({backdrop: 'static', keyboard: false})
+        }
+    }
+
+
+    $(document).ready(function() {
+        $("#headerTitle, #shortDescription").keypress(function(event) {
+            if(event.which == '13') {
+            return false;
+            }
+        });
+        $("#headerTitle, #shortDescription").on('input propertychange', function(event) {
+            var curval = this.value
+            if(curval.length == 150){
+                $(this).css("background", "#ffdede");
+                return false
+            }
+            else{
+                $(this).css("background", "white");
+            }
+        });
+    });
+    
+    
+    $('#coolpic').on('click', function() {
+        $('#file-input').trigger('click');
+    });
+    
+    fu.addEventListener('change', function(event){
+        var file = event.target.files[0]
+        var reader = new FileReader();
+            reader.onload = function (e) {
+                $('.img_button').attr('src', e.target.result);
+            }
+            // console.log(this.files.length>0)
+            if(this.files.length>0){
+                reader.readAsDataURL(this.files[0]);
+                $('#img_button').attr('src', file.name)
+            }
+            else{
+                $('#img_button').attr('src', "")
+            }
+    
+    
+
+        formdata = new FormData()
+        formdata.append('file', file)
+        formdata.append('upload_preset', upload_preset)
+
+        console.log("---->", formdata)
+    }
+    )
+
+    let req = new XMLHttpRequest();
+    let data_json = new Array(0)
+    
+    
+    req.onreadystatechange = () => {
+    if (req.readyState == XMLHttpRequest.DONE) {
+        var raw_json = req.responseText
+        data_json = JSON.parse(raw_json)
+        populateNews(data_json)
+        screen()
+        // console.log(data_json)
+    }
+    };
+    
+
+    req.open("GET", "https://api.jsonbin.io/b/5f8569427243cd7e824ea3e0/latest", true);
+    // req.setRequestHeader("secret-key", "<SECRET_KEY>");
+    req.send();
+    
+    function populateNews(list_news){
+        var bre = document.createElement("br")
+        var menuD = document.getElementById("newsBlock");
+        for (var item in list_news) {
+            itemData = list_news[item]
+            var header = itemData['header']
+            var content_short = itemData['content_short']
+            var content = itemData['content']
+            var url_image = itemData['url_image']
+
+            // console.log(list_news[item])
+
+            // whole eelement
+            var newItem = document.createElement("span");
+            newItem.className = 'newItem'
+
+            // just a header
+            var newItemHeader = document.createElement("label");
+            newItemHeader.className = "itemHeader"
+            newItemHeader.id = "nameHeader"
+            // newItemHeader.innerHTML = header
+
+            // header content 
+
+            var header_content =  document.createElement("p");
+            header_content.className = "itemHeaderContent"
+            header_content.innerHTML = header
+
+            // wrapper
+            var wrapperTE = document.createElement("div");
+            wrapperTE.className = "content_wrapper"
+
+            // picture
+            var pic = document.createElement("div")
+            
+            // pic.setAttribute("data-toggle", "modal")
+            // pic.setAttribute("data-target","#myModal")
+
+            var elemPic = document.createElement("img")
+            elemPic.src = url_image
+            // elemPic.className = "imgNew"
+            pic.appendChild(elemPic)
+            pic.className = "imgNew"
+
+            // text info wrapper
+            var text_info = document.createElement("div")
+            // text_info.innerHTML = content_short
+            text_info.className = 'text_info'
+
+            // short title
+            var title_short = document.createElement("div")
+            title_short.innerHTML = content_short
+            title_short.className = 'titleShort'
+
+            // all content
+            var content_all =  document.createElement("div")
+            content_all.setAttribute("txt_data", content)
+            content_all.innerHTML = "Нажмите на новость для прочтения..."
+            content_all.className = 'content'
+
+            // content_all.appendChild(innerContent)
+
+            // title_short.appendChild(title_short_content)
+
+            newItemHeader.appendChild(header_content)
+
+            text_info.appendChild(title_short)
+            text_info.appendChild(content_all)
+
+            wrapperTE.appendChild(pic)
+            wrapperTE.appendChild(text_info)
+            
+            newItem.appendChild(newItemHeader)
+            newItem.appendChild(wrapperTE)
+            newItem.onclick = ikylsha
+
+            newsBlock.appendChild(newItem);  
+
+        }
     }
 
     function ikylsha(text){
+        // console.log(data_json)
         var attrs= this.children
         var itemName = attrs[0].innerText
         var content = attrs[1]
@@ -458,8 +858,9 @@
         var picsource = content.children[0].children[0].src
         var itemShorttext = content.children[1].children[0].innerText
         var itemAlltext = content.children[1].children[1].attributes.txt_data.value
-        console.log(attrs)
+        // console.log(attrs)
         // console.log(itemAlltext)
+        
 
         $("#myModal").find('.modal-title').text(itemName)
         $("#myModal").find('.modal-body').text(itemShorttext)
@@ -467,6 +868,19 @@
         $("#myModal").find('.imgInModal').attr('src', picsource)
 
         $("#myModal").modal()
+    }
+
+    function ikylshaAdd(){
+        // var mainModal = $("#addNew").html();
+        // $("#addNew").html("");
+        // $("#addNew").html(mainModal);
+        $("#addNew").find('#headerTitle').val("")
+        $("#addNew").find('#shortDescription').val("")
+        $("#addNew").find('#allNewText').text("")
+        $("#addNew").find('.img_button').attr('src', '')
+
+
+        $("#addNew").modal()
     }
 
 
